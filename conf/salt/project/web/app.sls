@@ -87,6 +87,4 @@ migrate:
     - user: {{ pillar['project_name'] }}
     - group: {{ pillar['project_name'] }}
     - onlyif: "{{ vars.path_from_root('manage.sh') }} migrate --list | grep '\\[ \\]'"
-    - require:
-      - cmd: syncdb
     - order: last
