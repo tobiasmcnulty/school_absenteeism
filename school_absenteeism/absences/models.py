@@ -57,7 +57,7 @@ class Student(models.Model):
 
 class AbsenceReason(models.Model):
     label = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(blank=True)
 
     def __unicode__(self):
         return self.label
