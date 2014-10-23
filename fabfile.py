@@ -23,13 +23,10 @@ VALID_ROLES = (
     'cache',
 )
 
-# FIXME: Once the master has been setup this should be set to IP of the master
-# This assumes a single master for both staging and production
-env.master = 'CHANGEME'
-
 
 @task
 def staging():
+    env.master = 'ec2-54-197-166-10.compute-1.amazonaws.com'
     env.environment = 'staging'
 
 
@@ -132,7 +129,7 @@ def setup_minion(*roles):
     # install salt minion if it's not there already
     with settings(warn_only=True):
         with hide('running', 'stdout', 'stderr'):
-            installed = run('which salt-call')
+            installed = run('which salt-minion')
     if not installed:
         # install salt-minion from PPA
         sudo('apt-get update -qq -y')

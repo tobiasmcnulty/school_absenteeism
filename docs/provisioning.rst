@@ -159,15 +159,11 @@ has been provisioned you should set::
 
     env.master = '<ip-of-master>'
 
-in the top of the fabfile.
-
-If each environment has its own master then it should be set with the environment setup function ``staging`` or ``production``.
-In these case most commands will need to be preceded with the environment to ensure that ``env.master``
-is set.
+within the environment setup function ``staging`` or ``production``.
 
 Additional states and pillar information are contained in this repo and must be rsync'd to the master via::
 
-    fab -u <root-user> sync
+    fab <environment> -u <root-user> sync
 
 This must be done each time a state or pillar is updated. This will be called on each deploy to
 ensure they are always up to date.
