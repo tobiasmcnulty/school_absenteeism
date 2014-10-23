@@ -4,6 +4,9 @@ from django.db import models
 
 class School(models.Model):
     name = models.CharField(max_length=255)
+    
+    def __unicode__(self):
+        return self.name
 
 
 class HomeRoom(models.Model):
@@ -27,6 +30,9 @@ class HomeRoom(models.Model):
     last_name = models.CharField(max_length=255)
     grade = models.IntegerField(max_length=20, choices=GRADE_CHOICES)
 
+    def __unicode__(self):
+        return u'{0}, {1} ({2})'.format(self.last_name, self.first_name, self.school)
+
 
 class Parent(models.Model):
     first_name = models.CharField(max_length=255)
@@ -35,6 +41,9 @@ class Parent(models.Model):
     email = models.EmailField()
     #phone = USPhoneNumberField()
 
+    def __unicode__(self):
+        return u', '.join([self.last_name, self.first_name])
+
 
 class Student(models.Model):
     parent = models.ForeignKey(Parent)
@@ -42,10 +51,16 @@ class Student(models.Model):
     middle_initial = models.CharField(max_length=1)
     last_name = models.CharField(max_length=255)
 
+    def __unicode__(self):
+        return u', '.join([self.last_name, self.first_name])
+
 
 class AbsenceReason(models.Model):
     label = models.CharField(max_length=255)
     description = models.TextField()
+
+    def __unicode__(self):
+        return self.label
 
 
 class Absence(models.Model):
@@ -53,3 +68,6 @@ class Absence(models.Model):
     home_room = models.ForeignKey(HomeRoom)
     date = models.DateField()
     reason = models.ForeignKey(AbsenceReason)
+
+    def __unicode__(self):
+        return u'{0} absent from {1} on {2}'.format(self.student, self.home_room, self.date)

@@ -30,6 +30,10 @@ class AbsenceAdmin(admin.ModelAdmin):
 admin.site.register(absences.Absence, AbsenceAdmin)
 
 
+class StudentInline(admin.TabularInline):
+    model = absences.Student
+
+
 class StudentAdmin(admin.ModelAdmin):
     list_display = ('first_name', 'last_name',)
     inlines = (AbsenceInline,)
@@ -40,6 +44,7 @@ admin.site.register(absences.Student, StudentAdmin)
 class ParentAdmin(admin.ModelAdmin):
     list_display = ('first_name', 'last_name',)
     search_fields = ('first_name', 'last_name',)
+    inlines = (StudentInline,)
 admin.site.register(absences.Parent, ParentAdmin)
 
 
