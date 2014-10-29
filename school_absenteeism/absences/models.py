@@ -1,5 +1,5 @@
 from django.db import models
-#from django.contrib.localflavor.us.models import USPhoneNumberField
+from localflavor.us.models import PhoneNumberField
 
 
 class School(models.Model):
@@ -39,7 +39,7 @@ class Parent(models.Model):
     middle_initial = models.CharField(max_length=1)
     last_name = models.CharField(max_length=255)
     email = models.EmailField()
-    #phone = USPhoneNumberField()
+    phone = PhoneNumberField()
 
     def __unicode__(self):
         return u', '.join([self.last_name, self.first_name])
