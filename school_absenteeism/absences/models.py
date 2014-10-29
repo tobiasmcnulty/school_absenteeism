@@ -1,10 +1,22 @@
 from django.db import models
-from localflavor.us.models import PhoneNumberField
+from localflavor.us import models as us_models
 
 
-class School(models.Model):
+class Address(models.Model):
+    street1 = models.CharField(max_length=255)
+    street2 = models.CharField(max_length=255, blank=True)
+    city = models.CharField(max_length=255)
+    state = us_models.USStateField()
+    zip_code = us_models.CharField(max_length=10)
+
+    def __unicode__(self):
+        return u'{0}, {1}, {2}, {3} {4}'.format(self.street1, self.street2,
+                                                self.city, self.state, self.zip_code)
+
+
+class School(Address):
     name = models.CharField(max_length=255)
-    
+
     def __unicode__(self):
         return self.name
 
@@ -34,12 +46,12 @@ class HomeRoom(models.Model):
         return u'{0}, {1} ({2})'.format(self.last_name, self.first_name, self.school)
 
 
-class Parent(models.Model):
+class Parent(Address):
     first_name = models.CharField(max_length=255)
     middle_initial = models.CharField(max_length=1)
     last_name = models.CharField(max_length=255)
     email = models.EmailField()
-    phone = PhoneNumberField()
+    phone = us_models.PhoneNumberField()
 
     def __unicode__(self):
         return u', '.join([self.last_name, self.first_name])
